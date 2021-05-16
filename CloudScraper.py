@@ -98,6 +98,8 @@ def spider(base_urls, target):
     while True:
         #retrieve all the urls returned by the workers
         new_urls = p.map(worker, wannabe)
+        pool.close()
+        pool.join()
         #flatten them and remove repeated ones
         new_urls = list(set(itertools.chain(*new_urls)))
         wannabe = []
