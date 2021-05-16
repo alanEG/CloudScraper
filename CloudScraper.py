@@ -100,15 +100,12 @@ def spider(base_urls, target):
         new_urls = p.map(worker, wannabe)
         #flatten them and remove repeated ones
         new_urls = list(set(itertools.chain(*new_urls)))
-        p.close()
-        p.join()
         wannabe = []
         i = 0
 
         #if new_urls is empty meaning no more urls are being discovered, exit the loop
         if new_urls == []:
             break
-        
         else:
             for url in new_urls:
                 if url not in base_urls:
@@ -123,7 +120,8 @@ def spider(base_urls, target):
                     base_urls.append(url)
         
         print(colored('\nNew urls appended: {}\n'.format(i), 'green', attrs=['bold']))
-
+    p.close()
+    p.join()
     #once all the links for the given depth have been analyzed, execute the parser
     parser(base_urls)
 
