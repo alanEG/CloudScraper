@@ -93,13 +93,13 @@ def spider(base_urls, target):
     global target_
     target_ = parse(target)
     p = Pool(arguments.process)
+    p.close()
+    p.join()
     wannabe = [url for url in base_urls if target_['authority'] in parse(url)['authority']]
 
     while True:
         #retrieve all the urls returned by the workers
         new_urls = p.map(worker, wannabe)
-        p.close()
-        p.join()
         #flatten them and remove repeated ones
         new_urls = list(set(itertools.chain(*new_urls)))
         wannabe = []
