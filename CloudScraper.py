@@ -1,3 +1,4 @@
+#!/usr/bin/python3 
 from argparse import ArgumentParser
 from multiprocessing import Pool
 from termcolor import colored
